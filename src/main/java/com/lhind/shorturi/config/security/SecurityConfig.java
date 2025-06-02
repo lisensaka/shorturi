@@ -32,11 +32,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(
-                                "/v3/api-docs/**",         // ← Needed by Swagger UI
-                                "/swagger-ui/**",          // ← Needed for assets (JS, CSS)
-                                "/swagger-ui.html",        // ← Entry point
-                                "/api/auth/**"             // ← Optional: your login/register
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/api/auth/**"
                         ).permitAll()
+//                        .requestMatchers("/api/url/all-short-url").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

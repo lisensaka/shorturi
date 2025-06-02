@@ -17,7 +17,6 @@ public class AuthService {
 
     private final PasswordEncoder passwordEncoder;
 
-
     public String registerAndGenerateToken(RegisterRequestDto request) throws Exception {
         try {
             var requestEncoded = new RegisterRequestDto(request.username(), passwordEncoder.encode(request.password()));

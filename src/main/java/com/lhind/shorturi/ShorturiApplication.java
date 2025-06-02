@@ -13,11 +13,12 @@ import java.security.Principal;
 @SpringBootApplication
 @RestController
 @RequiredArgsConstructor
+@EnableScheduling
 public class ShorturiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ShorturiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ShorturiApplication.class, args);
+    }
 
 	@GetMapping("/hello")
 	public String shorturi(Principal principal) {

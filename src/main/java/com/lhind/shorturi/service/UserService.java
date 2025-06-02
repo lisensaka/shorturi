@@ -23,21 +23,16 @@ public class UserService implements UserDetailsService {
 
         checkIfUserByUsernameExistAndIsActive(request);
 
-        try {
+        User user = User
+                .builder()
+                .username(request.username())
+                .password((request.password()))
+                .role(Role.USER)
+                .createdAt(LocalDateTime.now())
+                .isActive(true)
+                .build();
 
-            User user = User
-                    .builder()
-                    .username(request.username())
-                    .password((request.password()))
-                    .role(Role.USER)
-                    .createdAt(LocalDateTime.now())
-                    .isActive(true)
-                    .build();
-
-            return userRepository.save(user);
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
-        }
+        return userRepository.save(user);
 
     }
 

@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.lhind.shorturi.config.ConstantAppInfo.API_AUTH_URL;
+
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping(API_AUTH_URL)
 //@RequiredArgsConstructor
 @Slf4j
 public class AuthController {
@@ -26,7 +28,6 @@ public class AuthController {
 
     private final AuthService authService;
 
-
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     public AuthController(AuthenticationManager authenticationManager, AuthService authService) {
@@ -34,12 +35,11 @@ public class AuthController {
         this.authService = authService;
     }
 
-
     @PostMapping("/signup")
     public ResponseEntity<AuthResponseDto> register(@RequestBody @Valid RegisterRequestDto request) throws Exception {
         logger.info("Register Api request: {} begin", request);
         var jwtToken = authService.registerAndGenerateToken(request);
-        logger.info("Register Api request: {} executed successfully", request);
+        logger.info("Register Api request: {} end", request);
         return ResponseEntity.ok(new AuthResponseDto(jwtToken));
     }
 
@@ -51,7 +51,7 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(request.username(), request.password()));
 
         var jwtToken = authService.authenticateAndGenerateToken(request);
-        logger.info("Authenticate Api request: {} executed successfully", request);
+        logger.info("Authenticate Api request: {} end", request);
 
         return ResponseEntity.ok(new AuthResponseDto(jwtToken));
     }

@@ -32,9 +32,9 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("StudentPlatform API")
+                        .title("URL Shortener API")
                         .version("1.0.0")
-                        .description("JWT Authenticated API for StudentPlatform"))
+                        .description("JWT secured API for shortening URLs"))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(new Components()
                         .addSecuritySchemes("bearerAuth", new SecurityScheme()
