@@ -39,4 +39,9 @@ public class UrlMapping {
 
     private String updatedBy;
 
+    public UrlMapping(String shortUrl, String longUrl, LocalDateTime expirationTime) {
+        this.shortUrl = shortUrl;
+        this.longUrl = longUrl;
+        this.expirationTime = expirationTime;
+    }
 }

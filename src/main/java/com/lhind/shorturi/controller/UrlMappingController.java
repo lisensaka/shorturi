@@ -27,7 +27,7 @@ public class UrlMappingController {
 
     @PostMapping("/shorten-url")
     public ResponseEntity<UrlResponseDto> saveAndReturnShortenUrl(
-            UrlRequestDto urlRequestDto,
+            @RequestBody UrlRequestDto urlRequestDto,
             @RequestParam(required = false, defaultValue = "5") int expirationTimeInMinutes,
             Principal principal) throws Exception {
         logger.info("SaveAndReturnShortenUrl Api request: {} begin", urlRequestDto);
@@ -50,7 +50,11 @@ public class UrlMappingController {
     public ResponseEntity<?> getOriginalUrl(@PathVariable String shortUrl) {
         logger.info("GetOriginalUrl Api request by shortUrl: {} begin", shortUrl);
 
-        var optionalUrlMapping = urlMappingService.findByShortUrl(shortUrl);
+        if (shortUrl == null || shortUrl.trim().isEmpty()) {
+            return ResponseEntity.status(400).body("Shorturl cannot be null or empty!");
+        }
+
+        var optionalUrlMapping = urlMappingService.findByShortUrl(shortUrl.trim());
         if (optionalUrlMapping.isEmpty()) {
             return ResponseEntity.status(404).body(String.format("Shorten URL :%s  not found", shortUrl));
         }

@@ -31,7 +31,7 @@ public class UrlMappingService {
     private final UserService userService;
 
 
-    @Scheduled(fixedDelay = 60000)
+    @Scheduled(fixedDelay = 120000)
     @Transactional
     public void deleteExpiredUrls() {
         logger.info("Cron job execution begin");
@@ -46,7 +46,7 @@ public class UrlMappingService {
         LocalDateTime now = LocalDateTime.now();
         try {
 
-            Optional<UrlMapping> optionalUrlMappingByLongUrlAndActive = urlMappingRepository.findByLongUrlAndExpirationTimeAfter(urlRequestDto.url(), now);
+            Optional<UrlMapping> optionalUrlMappingByLongUrlAndActive = urlMappingRepository.findByLongUrlAndExpirationTimeAfter(urlRequestDto.url().trim(), now);
             if (optionalUrlMappingByLongUrlAndActive.isPresent()) {
                 UrlMapping existingUrlMapping = optionalUrlMappingByLongUrlAndActive.get();
                 existingUrlMapping.setExpirationTime(LocalDateTime.now().plusMinutes(expirationTimeInMinutes <= 0 ? 5 : expirationTimeInMinutes));
@@ -65,10 +65,10 @@ public class UrlMappingService {
         try {
             UrlMapping urlMapping = UrlMapping
                     .builder()
-                    .longUrl(urlRequestDto.url())
+                    .longUrl(urlRequestDto.url().trim())
                     .clickCount(0)
                     .shortUrl(getShortUrlUniqueGenerated(urlRequestDto.url()))
-                    .expirationTime(LocalDateTime.now().plusMinutes(expirationTimeInMinutes))
+                    .expirationTime(LocalDateTime.now().plusMinutes(expirationTimeInMinutes <= 0 ? 5 : expirationTimeInMinutes))
                     .createdAt(LocalDateTime.now())
                     .createdBy(loggedUsername)
                     .build();
@@ -83,10 +83,6 @@ public class UrlMappingService {
             throw new Exception(message);
 
         }
-    }
-
-    private LocalDateTime calculateExpirationTime(int expirationTimeInMinutes) {
-        return (expirationTimeInMinutes == 0) ? LocalDateTime.now().plusMinutes(5) : LocalDateTime.now().plusMinutes(expirationTimeInMinutes);
     }
 
     public String getShortUrlUniqueGenerated(String longUrl) {
