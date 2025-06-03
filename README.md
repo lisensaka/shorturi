@@ -14,8 +14,7 @@ The main objective of this application is to provide APIs for creating, shorteni
 
 ### Things to do before running the App
 
-- execute the file inside docker/docker-compose.yml (use command docker compose up) in order to set up the DB
-- use Swagger for interacting with the api-s, Swagger url: (http://localhost:${server_port}/swagger-ui/index.html)
+- execute the docker compose file inside docker/docker-compose.yml (use command docker compose up) in order to set up the DB.
 
 
 ### Explaining third party libraries used in project
@@ -28,7 +27,9 @@ The main objective of this application is to provide APIs for creating, shorteni
 4- Automatic Cron Job - To do periodic checks in the database and clean up from expired URLs.
 
 5- Swagger (Springdoc OpenAPI) – Interactive API Documentation
-I integrated Swagger to auto-generate comprehensive and interactive documentation for all RESTful APIs.
+I integrated Swagger to auto-generate comprehensive and interactive documentation for all RESTful APIs, 
+Swagger url: (http://localhost:${server_port}/swagger-ui/index.html)
+
 
 ### Configuration settings
 
